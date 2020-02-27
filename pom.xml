@@ -14,7 +14,7 @@
         <PermGen>64m</PermGen>
         <MaxPermGen>512m</MaxPermGen>
         <java.version>1.8</java.version>
-        <scala.version>2.11.8</scala.version>
+        <scala.version>2.13.1</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
         <flink.version>1.9.1</flink.version>
     </properties>
