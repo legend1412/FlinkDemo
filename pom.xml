@@ -17,6 +17,7 @@
         <scala.version>2.11.8</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
         <flink.version>1.9.1</flink.version>
+<!--                <flink.version>1.4.0</flink.version>-->
     </properties>
 
 
@@ -57,35 +58,36 @@
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-table_2.11</artifactId>-->
+<!--            <version>${flink.version}</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-common</artifactId>
             <version>${flink.version}</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.apache.flink</groupId>-->
-        <!--<artifactId>flink-table_2.11</artifactId>-->
-        <!--<version>1.7.0</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-api-scala-bridge_2.11</artifactId>
             <version>${flink.version}</version>
             <!--<scope>provided</scope>-->
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.apache.flink</groupId>-->
-        <!--<artifactId>flink-table-api-scala</artifactId>-->
-        <!--<version>${flink.version}</version>-->
-        <!--&lt;!&ndash;<scope>provided</scope>&ndash;&gt;-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-api-scala_2.11</artifactId>
+            <version>${flink.version}</version>
+            <!--<scope>provided</scope>-->
+        </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-planner_2.11</artifactId>
             <version>${flink.version}</version>
             <!--<scope>provided</scope>-->
         </dependency>
-        <!-- or.. (for the new Blink planner) -->
+<!--        or.. (for the new Blink planner)-->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-planner-blink_2.11</artifactId>
