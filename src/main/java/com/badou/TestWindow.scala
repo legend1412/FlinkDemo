@@ -13,8 +13,8 @@ object TestWindow {
   def main(args: Array[String]): Unit = {
     val senv = StreamExecutionEnvironment.getExecutionEnvironment
     senv.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
-    //val data = senv.socketTextStream("192.168.137.3",9999)
-    val data = senv.socketTextStream("192.168.110.110", 9999)
+    val data = senv.socketTextStream("192.168.137.3",9999)
+    //val data = senv.socketTextStream("192.168.110.110", 9999)
     val stream = data.assignTimestampsAndWatermarks(
       new BoundedOutOfOrdernessTimestampExtractor[String](Time.seconds(5)) {
         //定义timestamp怎么ongoing数据中抽取出来[1583209245000 a 2020-03-03 12:20:45]
@@ -31,12 +31,12 @@ object TestWindow {
     // 要看这个数据在的这个窗口的临界值加上5秒才行，其实可以理解为时窗口的临界值等了5秒，而不是每个数据等了5秒
     stream
       //按照事件时间的滑动
-        .window(SlidingEventTimeWindows.of(Time.seconds(3),Time.seconds(1))).sum(1).print()
+      //  .window(SlidingEventTimeWindows.of(Time.seconds(3),Time.seconds(1))).sum(1).print()
     //      //按照事件时间的翻滚
       //.window(TumblingEventTimeWindows.of(Time.seconds(3))).sum(1).print()
     //    data.map((_,1L)).keyBy(0)
     //      //session window
-    //      //.window(EventTimeSessionWindows.withGap(Time.seconds(3)))
+          .window(EventTimeSessionWindows.withGap(Time.seconds(3))).sum(1).print()
     //      //事件窗口，按照事件数量（针对具体的key进行统计的数量）进行输出
     //      //.countWindow(5)
     //      //只有一个时间的时候是翻滚窗口timeWindow(Time.seconds(3))
