@@ -2,14 +2,25 @@ package com.badou
 
 import java.sql.{Connection, DriverManager}
 
-import com.badou.config.MysqlConf
-
 import scala.io.Source
 
 object TestMysql extends App {
+  //访问mysql服务器，通过3306端口访问
+  val url = "jdbc:mysql://192.168.137.3:3306/badou?useUnicode=true&characterEncoding=utf-8&useSSL=false"
+  //驱动名称
+  val driver = "com.mysql.jdbc.Driver"
+  //用户名和密码
+  val username="root"
+  val password="123456"
 
+  var connection : Connection =_
   try {
-    val statement = MysqlConf.statement
+    //注册
+    Class.forName(driver)
+    //得到连接
+    connection = DriverManager.getConnection(url, username, password)
+    val statment = connection.createStatement()
+
     //去product.csv取数据，保存到mysql中
     val input = "D:\\BaiduNetdiskDownload\\【14期-12day】Flink实践\\data\\products.csv"
     val sourcefile = Source.fromFile(input, "utf-8")
@@ -29,14 +40,10 @@ object TestMysql extends App {
 
     //插入数据到mysql
     //建表create table products
-    // (product_id int,product_name varchar(200),aisle_id int,department_id int) default character set 'utf8';
+    // (product_id int,product_name varchar(200),aisle_id int,department_id int) default charset=utf8;
 
     data.foreach(line =>
-      try {
-        statement.execute("insert into products values " + line)
-      } catch {
-        case  e:Exception=>println("插入sql:"+e)
-      }
+      statment.execute("insert into products values " + line)
     )
   }catch {case e:Exception=>println(e)}
 }
