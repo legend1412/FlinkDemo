@@ -13,7 +13,7 @@ object Test {
 //    data.map(x => (x.split(",")(1), 1L)).groupBy(0).sum(1).print()
 
         val data = senv.socketTextStream("192.168.137.3",9999,'\n')
-        val wordcounts = data.map((_,1)).keyBy(0).sum(1)
+        val wordcounts = data.map((_,1L)).keyBy(0).sum(1)
         wordcounts.print()
 
 
