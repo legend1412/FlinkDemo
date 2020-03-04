@@ -1,14 +1,5 @@
 
-.idea/codeStyles/codeStyleConfig.xml
-.idea/codeStyles/Project.xml
-.idea/compiler.xml
-.idea/encodings.xml
-.idea/libraries/
+.idea
 target
-.idea/misc.xml
-.idea/scala_compiler.xml
-.idea/workspace.xml
 FlinkDemo.iml
-.idea/.name
-.idea/modules.xml
-.idea/vcs.xml
+
