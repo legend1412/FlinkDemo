@@ -1,5 +1,7 @@
 package com.badou.user_prefer
 
+import java.sql.Statement
+
 import com.badou.config.MysqlConf
 import org.json4s.DefaultFormats
 import org.json4s.native.Serialization
@@ -7,11 +9,11 @@ import org.json4s.native.Serialization
 import scala.collection.mutable
 
 object ReadMysql {
-  val statement = MysqlConf.statement
+  val statement:Statement = MysqlConf.statement
   val productMap: mutable.Map[String, String] = mutable.Map[String, String]()
-  getProductData
+  saveProductData()
 
-  def getProductData: Unit = {
+  def saveProductData(): Unit = {
     implicit val formats: DefaultFormats.type = org.json4s.DefaultFormats
     val products = statement.executeQuery("select * from products")
     while (products.next()) {
@@ -25,5 +27,4 @@ object ReadMysql {
   }
 
   case class Products(product_name: String, aisle_id: String, department_id: String)
-
 }

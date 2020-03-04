@@ -11,7 +11,7 @@ object TestMysql extends App {
   try {
     val statement = MysqlConf.statement
     //去product.csv取数据，保存到mysql中
-    val input = "D:\\BaiduNetdiskDownload\\【14期-12day】Flink实践\\data\\products.csv"
+    val input = "H:\\B八斗\\14期课程\\【14期-12day】Flink实践\\data\\products.csv"
     val sourcefile = Source.fromFile(input, "utf-8")
 
     //处理数据 produce_name 有引号

@@ -1,15 +1,15 @@
 package com.badou.config
 
-import java.sql.{Connection, DriverManager}
+import java.sql.{Connection, DriverManager, Statement}
 
 object MysqlConf {
   //访问mysql服务器，通过3306端口访问
-  val url = "jdbc:mysql://192.168.137.3:3306/badou?useUnicode=true&characterEncoding=utf-8&useSSL=false"
+  val url = "jdbc:mysql://192.168.110.110:3307/badou?useUnicode=true&characterEncoding=utf-8&useSSL=false"
   //驱动名称
   val driver = "com.mysql.jdbc.Driver"
   //用户名和密码
   val username="root"
-  val password="123456"
+  val password="wsyj9003"
 
   var connection : Connection =_
 
@@ -17,5 +17,5 @@ object MysqlConf {
   Class.forName(driver)
   //得到连接
   connection = DriverManager.getConnection(url, username, password)
-  val statement = connection.createStatement()
+  val statement:Statement = connection.createStatement()
 }
