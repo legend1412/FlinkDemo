@@ -15,6 +15,8 @@ object UserPrefer {
     val senv = StreamExecutionEnvironment.getExecutionEnvironment
     val data = senv.socketTextStream("192.168.137.3", 9999)
 
+    //全局并行度
+    senv.setParallelism(4)
     //mysql中product的数据，放到map中
     val productMap = ReadMysql.productMap
     val redisConf = new FlinkJedisPoolConfig.Builder()
@@ -30,7 +32,7 @@ object UserPrefer {
       //}.print() //7> (189408,Map(department_id -> 16, aisle_id -> 120,
       // product_name -> Icelandic Style Skyr Blueberry Non-fat Yogurt))
     }
-    dataParse.print()
+    dataParse.print().setParallelism(3)
 
     dataParse
       .keyBy(_._1)
