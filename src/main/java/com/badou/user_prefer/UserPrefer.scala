@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON
 import org.apache.flink.api.common.functions.AggregateFunction
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.api.windowing.time.Time
+import org.apache.flink.streaming.connectors.redis.RedisSink
+import org.apache.flink.streaming.connectors.redis.common.config.FlinkJedisPoolConfig
 
 import scala.collection.JavaConverters._
 import scala.collection.mutable
@@ -11,11 +13,14 @@ import scala.collection.mutable
 object UserPrefer {
   def main(args: Array[String]): Unit = {
     val senv = StreamExecutionEnvironment.getExecutionEnvironment
-    val data = senv.socketTextStream("192.168.110.110", 9999)
-      .setParallelism(4)//并行度
+    val data = senv.socketTextStream("192.168.137.3", 9999)
 
     //mysql中product的数据，放到map中
     val productMap = ReadMysql.productMap
+    val redisConf = new FlinkJedisPoolConfig.Builder()
+      .setHost("192.168.137.3")
+      .setPort(6379)
+      .build()
 
     // user_id,product_id (orders.join(priors)) 数据解析和关联(mysql product属性)
     val dataParse = data.map(_.split(",")).map {
@@ -33,7 +38,7 @@ object UserPrefer {
       //统计{aisle_id:{aisle_id_val:cnt},department_id:{department_id_val:cnt}} 聚合
       .aggregate(new UserProductPreferAggregate)
       //.print()
-      .addSink()
+      .addSink(new RedisSink(redisConf,new UserPreferRedisMapper()))
 
 
 
@@ -61,7 +66,7 @@ object UserPrefer {
       //Map(department_id->Map(),aisle_id->Map())
 
       value._2.map { attribute => //aisle_id,department_id (aisle_id,14),(department_id,23)
-        val attributeValueCntMap = accumulator.get(attribute._1).get //accumulator(attribute._1)
+        val attributeValueCntMap = accumulator(attribute._1) //accumulator.get(attribute._1).get
         attributeValueCntMap += (attribute._2 -> (attributeValueCntMap.getOrElse(attribute._2, 0) + 1))
       }
       accumulator
