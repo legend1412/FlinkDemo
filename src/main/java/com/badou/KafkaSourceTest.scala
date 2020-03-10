@@ -10,7 +10,7 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer08
 object KafkaSourceTest {
   def main(args: Array[String]): Unit = {
     val senv = StreamExecutionEnvironment.getExecutionEnvironment
-    senv.setParallelism(211111)
+    senv.setParallelism(4)
     //senv.getCheckpointConfig.setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE)
 
     val properties = new Properties()
